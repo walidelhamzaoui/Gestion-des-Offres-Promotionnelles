@@ -25,6 +25,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $stmt = $pdo->prepare("INSERT INTO offres (titre, description, periode_validite, image, category_id) VALUES (?, ?, ?, ?, ?)");
     if ($stmt->execute([$titre, $description, $periode_validite, $image, $category_id])) {
         echo "L'offre a été ajoutée avec succès.";
+        header("Location: index.php");
     } else {
         echo "Erreur lors de l'ajout de l'offre.";
     }

@@ -66,7 +66,7 @@ background-color:#0891b2; font-size:23px
 </head>
 <body>
     <div class="signup-container">
-        <div class="signup-header p-2">
+        <div class="signup-header p-2 pb-0">
             <h2 class="  text-white text-center p-1 pb-2 rounded">Inscription</h2>
         </div>
         <?php if (!empty($message)): ?>
@@ -87,7 +87,8 @@ background-color:#0891b2; font-size:23px
                 <label for="mot_de_passe">Mot de passe:</label>
                 <input type="password" class="form-control" id="mot_de_passe" name="mot_de_passe" required>
             </div>
-            <button type="submit" class="btn btn-primary btn-block">S'inscrire</button>
+            <div class="mt-4 mb-3 d-flex justify-content-center col-12">
+                <button type="submit" class="btn btn-dark btn-block col-lg-6 col-12">S'inscrire</button></div>
         </form>
     </div>
 

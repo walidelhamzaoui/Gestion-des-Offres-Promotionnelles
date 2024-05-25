@@ -84,7 +84,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 <input type="password" class="form-control" id="mot_de_passe" name="mot_de_passe" required>
             </div>
             <div class="mt-4 mb-3 d-flex justify-content-center col-12">
-                <button type="submit" class="btn btn-primary btn-block col-lg-6 col-12">Connexion</button>
+                <button type="submit" class="btn btn-dark btn-block col-lg-6 col-12">Connexion</button>
             </div>
         </form>
     </div>

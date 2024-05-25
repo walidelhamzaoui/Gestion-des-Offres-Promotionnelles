@@ -1,0 +1,171 @@
+/*bytewebster.com*/
+/*bytewebster.com*/
+/*bytewebster.com*/
+@import url(https://unpkg.com/@webpixels/css@1.1.5/dist/index.css);
+
+/* Bootstrap Icons */
+@import url("https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css");
+.navbar-toggler {
+    border: 0;
+  }
+
+  .navbar-toggler:focus,
+  .navbar-toggler:active,
+  .navbar-toggler-icon:focus {
+    outline: none;
+    box-shadow: none;
+    border: 0;
+  }
+
+  .toggler-icon {
+    width: 30px;
+    height: 3px;
+    background-color: #072f7e;
+    display: block;
+    transition: all 0.2s;
+  }
+
+  .middle-bar {
+    margin: 5px auto;
+  }
+
+  .navbar-toggler .top-bar {
+    transform: rotate(45deg);
+    transform-origin: 10% 10%;
+  }
+
+  .navbar-toggler .middle-bar {
+    opacity: 0;
+    filter: alpha(opacity=0);
+  }
+
+  .navbar-toggler .bottom-bar {
+    transform: rotate(-45deg);
+    transform-origin: 10% 10%;
+  }
+
+  .navbar-toggler.collapsed .top-bar {
+    transform: rotate(0);
+  }
+
+  .navbar-toggler.collapsed .middle-bar {
+    opacity: 1;
+    filter: alpha(opacity=100);
+  }
+
+  .navbar-toggler.collapsed .bottom-bar {
+    transform: rotate(0);
+  }
+
+  .navbar-toggler.collapsed .toggler-icon {
+    background-color: #77777777;
+  }
+  ::-webkit-scrollbar{
+    width:5px; height:20px
+  }
+  ::-webkit-scrollbar-track{
+    background-color: #D1E5FF;
+  }
+  ::-webkit-scrollbar-thumb{
+    background-color: #74cccc;
+
+  }
+  /* Custom CSS for the dashboard */
+
+.text-white {
+    color: #fff !important;
+}
+/* Custom CSS for the vertical navbar */
+body {
+    font-family: Arial, sans-serif; /* Change to your preferred font */
+    overflow-x: hidden; height: fit-content
+}
+
+/* Navbar styling */
+.navbar-navdashboard {
+    width: 100%;
+    /* background: linear-gradient(to right, #f4f4f4, #d8d8e3); */
+    height: fit-content
+}
+
+.nav-itemdashboard {
+    margin-bottom: 5px;
+}
+
+.nav-linkdashboard {
+    /* padding: 10px 15px; */
+    border-radius: 8px;
+    transition: background-color 0.3s ease;
+    color: #333; /* Font color */
+}
+
+.nav-linkdashboard:hover {
+    background-color: #e9ecef;
+    color: #000;
+}
+
+.nav-linkdashboard.active {
+    background-color: cadetblue;
+    border-color: #007bff;
+    color: #fff; /* Active font color */
+    
+}
+
+.nav-linkdashboard.active:hover {
+    background-color: #0056b3;
+}
+.nav-link.active {
+    background-color: #007bff;
+    border-color: #007bff;
+    color: #fff; /* Active font color */
+}
+.nav-link.active {
+    background: rgb(45,131,209);
+    background: linear-gradient(90deg, rgba(45,131,209,1) 0%, rgba(83,148,204,1) 65%, rgba(0,212,255,1) 100%);
+  color: #ffffff; /* White text color */
+
+}
+@media only screen and (max-width: 767px) {
+  /* Styles à appliquer pour les téléphones */
+  /* Par exemple */
+ .logo{
+  width:fit-content !important;height: 60px !important;margin-bottom: 20px !important;
+ }
+ .nav-linkdashboard {
+  /* padding: 10px 15px; */
+  border-radius: 10px;
+  transition: background-color 0.3s ease;
+  color: #ece5e5; /* Font color */
+  padding:10px 20px !important;width: fit-content;
+  
+}
+
+}
+.navbar-navdashboard {
+    padding-left: 0; /* Supprime le padding par défaut de la liste */
+    list-style: none; /* Supprime les puces de la liste */
+}
+
+.nav-item.nav-itemdashboard {
+    margin-bottom: 10px; /* Ajoute de l'espace entre chaque élément de la liste */
+}
+
+.nav-link.nav-linkdashboard {
+    display: flex; /* Utilise flexbox pour aligner les éléments horizontalement */
+    align-items: center; /* Centre les éléments verticalement */
+    text-decoration: none; /* Supprime la décoration du texte */
+    color: #000; /* Couleur du texte */
+}
+
+.nav-link.nav-linkdashboard img {
+    margin-right: 10px; /* Ajoute de l'espace entre l'icône et le texte */
+    width: 20px !important; /* Largeur de l'icône */
+    height: auto; /* Hauteur automatique pour maintenir les proportions */
+}
+#logout-link{
+background-color: red;border-radius: 10px;color:white;margin-top: 20px;
+}
+
+.main{
+    height: fit-content !important;
+}
