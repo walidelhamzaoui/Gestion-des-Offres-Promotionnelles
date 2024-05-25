@@ -169,3 +169,12 @@ background-color: red;border-radius: 10px;color:white;margin-top: 20px;
 .main{
     height: fit-content !important;
 }
+.profile-header h2{
+  background: rgb(45,131,209);
+  background: linear-gradient(90deg, rgba(45,131,209,1) 0%, rgba(83,148,204,1) 65%, rgba(0,212,255,1) 100%);
+color: #ffffff; /* White text color */
+
+}
+.profile-container input{
+ padding: 20px !important;border:1px solid rgba(0, 0, 0, 0.381) !important;
+}

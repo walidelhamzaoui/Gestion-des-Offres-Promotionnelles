@@ -138,40 +138,39 @@ require 'db.php';
                     <a href="../index.php" class="navbar-brand pt-5  "><img src="../img/image2fsac4.jpg" alt="FSAC Logo"
                             class="logo"></a>
                 </div>
-                <li class="nav-item nav-itemdashboard pt-2"> <?php if ($user_role == 'admin'): ?>
-                        <a href="tableau_de_bord.php" class=" nav-link nav-linkdashboard  " class="btn btn-primary"><i
-                                class="bi bi-people-fill me-2" style="font-size:20px"></i> Gestion des
-                            utilisateurs</a>
-                        <?php endif; ?>
-                    </li>
-                
-                    <li class="nav-item nav-itemdashboard "><a
-                            class="nav-link nav-linkdashboard fs-6 "
-                            href="categories.php"><i class="bi bi-grid" style="font-size:20px"></i> 
-                            Categories</a></li>
+                <li class="nav-item nav-itemdashboard"> <?php if ($user_role == 'admin'): ?>
+                    <a href="tableau_de_bord.php" class="nav-link nav-linkdashboard "
+                        class="btn btn-primary"><i class="bi bi-people-fill ps-3 me-3" style="font-size:20px"></i>
+                        Gestion des utilisateurs</a>
+                    <?php endif; ?>
+                </li>
 
-                    <li>
+                <li class="nav-item nav-itemdashboard "><a class="nav-link nav-linkdashboard active py-2  rounded-2 text-white fs-6 "
+                        href="categories.php"><i class="bi bi-grid ps-3 me-3" style="font-size:20px"></i>
+                        Categories</a></li>
 
-                    <li class="nav-item nav-itemdashboard "><a class="nav-link text-white active  rounded-2  nav-linkdashboard fs-6 "
-                            href="ajoute_offre.php">
-                            <i class="bi bi-gift-fill" style="font-size:20px"></i>
-                            Offres</a></li>
-                    <li class="nav-item nav-itemdashboard "><a class="nav-link nav-linkdashboard fs-6 "
-                            href="profil.php"><i class="bi bi-person-circle me-2" style="font-size:20px"></i> Mon
-                            Profil</a></li>
+                <li>
 
-                    <li>
-                        <a class="nav-link nav-linkdashboard fs-6" id="logout-link" href="deconnexion.php"><i
-                                class="bi bi-power me-2" style="font-size:20px"></i>Déconnexion</a></a>
-                    </li>
+                <li class="nav-item nav-itemdashboard "><a class="nav-link  nav-linkdashboard fs-6 "
+                        href="ajoute_offre.php">
+                        <i class="bi bi-gift-fill ps-3 me-3" style="font-size:20px"></i>
+                        Offres</a></li>
+                <li class="nav-item nav-itemdashboard"><a class="nav-link nav-linkdashboard " href="profil.php"><i
+                            class="bi bi-person-circle ps-3 me-3" style="font-size:20px"></i> Mon
+                        profil</a></li>
+
+                <li>
+                    <a class="nav-link nav-linkdashboard" id="logout-link" href="deconnexion.php"><i
+                            class="bi bi-power ps-3 me-3" style="font-size:20px"></i> Déconnexion</a></a>
+                </li>
             </ul>
 
         </div>
 
         <!-- Dashboard -->
-        <div class="d-flex flex-column flex-lg-row h-lg-full bg-surface-secondary ">
+        <div class="d-flex flex-column  flex-lg-row h-lg-full bg-surface-secondary ">
             <!-- Vertical Navbar -->
-            <nav class="navbar  d-none d-md-block eshow navbar-vertical h-lg-screen navbar-expand-lg px-0 py-0 position-relative   border-bottom border-bottom-lg-0 border-end-lg"
+            <nav class="navbar  bg-white d-none d-md-block eshow navbar-vertical h-lg-screen navbar-expand-lg px-0 py-0 position-relative   border-bottom border-bottom-lg-0 border-end-lg"
                 id="navbarVertical">
 
                 <ul class="navbar-navdashboard navbar-nav px-2 text-center">
@@ -215,8 +214,10 @@ require 'db.php';
                 <main class="py-6">
                     <div class="d-flex justify-content-center align-items-center ">
                         <div class="card shadow-sm col-lg-5 col-11 ">
-                            <div class="card-body">
-                                <h4 class="card-title text-center mb-4">Ajouter une nouvelle catégorie</h4>
+                            <div class="card-body  p-4">
+                            <h4 class="col-12 card-title  p-2 px-lg-5 rounded px-3 py-2 text-white"
+                                    style="background: rgb(45,131,209);
+                           background: linear-gradient(90deg, rgba(45,131,209,1) 0%, rgba(83,148,204,1) 65%, rgba(0,212,255,1) 100%)">Ajouter une nouvelle catégorie</h4>
                                 <form method="POST"
                                     class=" d-flex justify-content-center align-items-center flex-column">
                                     <div class="col-md-12 col-12">
@@ -232,9 +233,11 @@ require 'db.php';
                         </div>
 
                     </div>
-
-                    <h2 class="text-center my-4">Liste des catégories</h2>
-
+<div class="d-flex justify-content-center mt-3">
+                    <h4 class="col-lg-4 card-title text-center  p-2 px-lg-5 rounded px-3 py-2 text-white"
+                                    style="background: rgb(45,131,209);
+                           background: linear-gradient(90deg, rgba(45,131,209,1) 0%, rgba(83,148,204,1) 65%, rgba(0,212,255,1) 100%)">Liste des catégories</h4>
+</div>
                     <div class="d-flex justify-content-center align-items-center ">
                         <div class="table-responsive  col-lg-9 col-12">
                             <table class="table table-striped table-hover">

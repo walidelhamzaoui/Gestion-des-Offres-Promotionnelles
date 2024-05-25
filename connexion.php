@@ -3,6 +3,7 @@ session_start();
 require 'db.php';
 
 $message = '';
+$message_type = '';
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $email = $_POST['email'];
@@ -16,8 +17,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         if ($user['statut'] == 'actif') {
             $_SESSION['user_id'] = $user['id'];
             $_SESSION['user_role'] = $user['role'];
-            header("Location: tableau_de_bord.php");
-            exit();
+            
+            if ($user['role'] == 'client') {
+                header("Location: index.php");
+            } elseif ($user['role'] == 'gestionnaire') {
+                header("Location: index.php");
+            } else {
+                header("Location: tableau_de_bord.php");
+            }
+          exit();
+        
+        
         } else {
             $message = "Votre compte est en attente d'approbation.";
             $message_type = 'warning';
@@ -28,6 +38,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 }
 ?>
+
+
 
 <!DOCTYPE html>
 <html lang="en">
