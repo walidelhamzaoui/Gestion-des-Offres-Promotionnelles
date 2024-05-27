@@ -7,7 +7,8 @@ if (!isset($_SESSION['user_id'])) {
 }
 
 $user_role = $_SESSION['user_role'];
-if (!isset($_SESSION['user_id']) || $_SESSION['user_role'] != 'admin') {
+if (!isset($_SESSION['user_id']) || $_SESSION['user_role'] != 'admin'  && $_SESSION['user_role'] != 'gestionnaire
+') {
     header("Location: connexion.php");
     exit();
 }

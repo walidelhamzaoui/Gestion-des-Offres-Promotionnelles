@@ -215,7 +215,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     <main class="py-6">
                         <div class="container profile-container">
                             <div class="profile-header p-4  d-flex justify-content-center align-items-center">
-                            <h4 class="col-12 p-2 px-lg-5 rounded px-3 py-2 text-white"
+                            <h4 class="col-lg-4 col-12 p-2 px-lg-5 rounded px-3 py-2 text-white"
                                     style="background: rgb(45,131,209);
                            background: linear-gradient(90deg, rgba(45,131,209,1) 0%, rgba(83,148,204,1) 65%, rgba(0,212,255,1) 100%)">Mon Profil</h4>
                             </div>

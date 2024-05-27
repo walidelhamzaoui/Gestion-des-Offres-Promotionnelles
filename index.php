@@ -2,6 +2,16 @@
 require 'db.php';
 session_start();
 
+// Vérifier si l'utilisateur est authentifié
+if (!isset($_SESSION['user_id'])) {
+    // Rediriger vers la page de connexion si l'utilisateur n'est pas authentifié
+    header("Location: connexion.php");
+    exit();
+}
+
+// Récupérer l'ID de l'utilisateur authentifié
+$user_id = $_SESSION['user_id'];
+
 // Initialisation de la requête SQL de base
 $sql = "SELECT offres.*, categories.name AS category_name 
         FROM offres 
@@ -38,9 +48,9 @@ if ($stmt->rowCount() === 0) {
 }
 
 // Récupération des offres depuis la base de données
-
 $offres = $stmt->fetchAll();
-$user_id = $_SESSION['user_id'];
+
+// Récupérer les informations de l'utilisateur authentifié
 $stmt = $pdo->prepare("SELECT * FROM utilisateurs WHERE id = ?");
 $stmt->execute([$user_id]);
 $user = $stmt->fetch();
@@ -87,7 +97,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 
 
-
 <!DOCTYPE html>
 <html lang="fr">
 
@@ -105,15 +114,57 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             padding-left: 20px;
         }
 
-        .card {
-            margin-bottom: 20px;
-            box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
-        }
+    
+        /* Custom CSS for modern cards */
+.card {
+    border: none;
+    border-radius: 15px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    transition: transform 0.3s, box-shadow 0.3s;
+}
 
-        .card img {
-            height:300px;
-            object-fit: cover;
-        }
+.card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 16px 32px rgba(0, 0, 0, 0.2);
+}
+
+.card-img-top {
+    height: 200px;
+    object-fit: cover;
+}
+
+.card-body {
+    padding: 15px;
+    background-color: #f8f9fa;
+}
+
+.card-title {
+    font-size: 1.25rem;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.card-text {
+    font-size: 1rem;
+    color: #333;
+    margin-bottom: 15px;
+}
+
+
+
+
+
+
+
+.text-white {
+    color: #fff !important;
+}
+
+.text-muted {
+    color: #6c757d !important;
+}
+
 
         .newsletter-container {
             display: flex;
@@ -257,7 +308,7 @@ background: linear-gradient(90deg, rgba(17,173,218,1) 0%, rgba(30,104,180,1) 13%
                         <a class="nav-link py-1 mt-3 border-bottom  rounded bg-info text-white p-3 px-5" style="font-size:18px;width:fit-content" aria-current="page" href="#">Les Offres</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#" style="font-size:18px" data-bs-toggle="modal" data-bs-target="#profileModal">Profil</a>
+                        <a class="nav-link" href="#" style="font-size:18px" data-bs-toggle="modal" data-bs-target="#profileModal">Mon Profil</a>
                     </li>
                 </ul>
                 <form action="index.php" method="GET" class="d-flex gap-4 position-relative" id="searchForm">

@@ -21,7 +21,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             if ($user['role'] == 'client') {
                 header("Location: index.php");
             } elseif ($user['role'] == 'gestionnaire') {
-                header("Location: index.php");
+                header("Location: categories.php");
             } else {
                 header("Location: tableau_de_bord.php");
             }
