@@ -42,7 +42,7 @@ require 'db.php';
 
 <head>
     <meta charset="utf-8">
-    <title>Dashboard</title>
+    <title>Categories</title>
     <link rel="stylesheet" type="text/css" href="./css/style.css">
     <!-- Bootstrap 5 CSS -->
     <!-- Inline style to ensure margin is applied -->
@@ -133,19 +133,20 @@ require 'db.php';
         <div class="collapse navbar-collapse " id="sidebarCollapse">
             <!-- Navigation -->
 
-            <ul class="navbar-navdashboard navbar-nav px-3 ">
+            <ul class="navbar-navdashboard navbar-nav px-2 ">
                 <div class="container-fluid text-center mt-lg-5">
                     <a href="../index.php" class="navbar-brand pt-5  "><img src="../img/image2fsac4.jpg" alt="FSAC Logo"
                             class="logo"></a>
                 </div>
                 <li class="nav-item nav-itemdashboard"> <?php if ($user_role == 'admin'): ?>
-                    <a href="tableau_de_bord.php" class="nav-link nav-linkdashboard "
-                        class="btn btn-primary"><i class="bi bi-people-fill ps-3 me-3" style="font-size:20px"></i>
+                    <a href="tableau_de_bord.php" class="nav-link nav-linkdashboard " class="btn btn-primary"><i
+                            class="bi bi-people-fill ps-3 me-3" style="font-size:20px"></i>
                         Gestion des utilisateurs</a>
                     <?php endif; ?>
                 </li>
 
-                <li class="nav-item nav-itemdashboard "><a class="nav-link nav-linkdashboard active py-2  rounded-2 text-white fs-6 "
+                <li class="nav-item nav-itemdashboard "><a
+                        class="nav-link nav-linkdashboard active py-2  rounded-2 text-white fs-6 "
                         href="categories.php"><i class="bi bi-grid ps-3 me-3" style="font-size:20px"></i>
                         Categories</a></li>
 
@@ -161,7 +162,7 @@ require 'db.php';
 
                 <li>
                     <a class="nav-link nav-linkdashboard" id="logout-link" href="deconnexion.php"><i
-                            class="bi bi-power ps-3 me-3" style="font-size:20px"></i> Déconnexion</a></a>
+                            class="bi bi-power ps-3 me-5" style="font-size:20px"></i> Déconnexion</a></a>
                 </li>
             </ul>
 
@@ -170,34 +171,35 @@ require 'db.php';
         <!-- Dashboard -->
         <div class="d-flex flex-column  flex-lg-row h-lg-full bg-surface-secondary ">
             <!-- Vertical Navbar -->
-            <nav class="navbar  bg-white d-none d-md-block eshow navbar-vertical h-lg-screen navbar-expand-lg px-0 py-0 position-relative   border-bottom border-bottom-lg-0 border-end-lg"
+            <nav class="navbar   d-none d-md-block eshow navbar-vertical h-lg-screen navbar-expand-lg px-0 py-0 position-relative   border-bottom border-bottom-lg-0 border-end-lg"
                 id="navbarVertical">
 
-                <ul class="navbar-navdashboard navbar-nav px-2 text-center">
+                <ul class="navbar-navdashboard navbar-nav px-2  text-center">
                     <div class="pt-2">
                         <h6 class="fs-6 "> Gestion des Offres Promotionnelles </h6>
                     </div>
                     <hr>
                     <li class="nav-item nav-itemdashboard pt-2"> <?php if ($user_role == 'admin'): ?>
-                        <a href="tableau_de_bord.php" class=" nav-link nav-linkdashboard  " class="btn btn-primary"><i
+                        <a href="tableau_de_bord.php" class=" nav-link nav-linkdashboard my-1 " class="btn btn-primary"><i
                                 class="bi bi-people-fill" style="font-size:20px"></i> Gestion des
                             utilisateurs</a>
                         <?php endif; ?>
                     </li>
 
-                   
+
                     <li class="nav-item nav-itemdashboard "><a
-                            class="nav-link nav-linkdashboard fs-6 text-white active  rounded-2 "
-                            href="categories.php"><i class="bi bi-grid" style="font-size:20px"></i> 
-                            Categories</a></li>
+                            class="nav-link nav-linkdashboard fs-6 text-white active  my-1 rounded-2 "
+                            href="categories.php"><i class="bi bi-grid" style="font-size:20px"></i>
+                            Categories</a>
+                        </li>
 
-                    <li>
 
-                    <li class="nav-item nav-itemdashboard "><a class="nav-link   nav-linkdashboard fs-6 "
+
+                    <li class="nav-item nav-itemdashboard "><a class="nav-link  my-1  nav-linkdashboard fs-6 "
                             href="ajoute_offre.php">
                             <i class="bi bi-gift-fill" style="font-size:20px"></i>
                             Offres</a></li>
-                    <li class="nav-item nav-itemdashboard "><a class="nav-link nav-linkdashboard fs-6 "
+                    <li class="nav-item nav-itemdashboard "><a class="nav-link nav-linkdashboard fs-6 my-1 "
                             href="profil.php"><i class="bi bi-person-circle" style="font-size:20px"></i> Mon
                             Profil</a></li>
 
@@ -211,56 +213,70 @@ require 'db.php';
             </nav>
             <!-- Main content -->
             <div class="h-screen flex-grow-1  main overflow-y-lg-auto">
-                <main class="py-6">
-                    <div class="d-flex justify-content-center align-items-center ">
-                        <div class="card shadow-sm col-lg-5 col-11 ">
-                            <div class="card-body  p-4">
-                            <h4 class="col-12 card-title  p-2 px-lg-5 rounded px-3 py-2 text-white"
-                                    style="background: rgb(45,131,209);
-                           background: linear-gradient(90deg, rgba(45,131,209,1) 0%, rgba(83,148,204,1) 65%, rgba(0,212,255,1) 100%)">Ajouter une nouvelle catégorie</h4>
-                                <form method="POST"
-                                    class=" d-flex justify-content-center align-items-center flex-column">
-                                    <div class="col-md-12 col-12">
-                                        <label for="category_name" class="form-label">Nom de la catégorie</label>
-                                        <input type="text" class="form-control" id="category_name" name="category_name"
-                                            required>
-                                    </div>
-                                    <div class="col-8 text-center my-3">
-                                        <button type="submit" class="btn btn-dark col-8 ">Ajouter</button>
-                                    </div>
-                                </form>
+                <main class=" ">
+                    <div class="d-flex justify-content-center align-items-center">
+                        <div class="card shadow-sm col-lg-12 col-12">
+                            <div class="card-body p-4">
+                                <div class="d-flex justify-content-between p-3">
+                                    <h4 class="card-title p-2 px-lg-5 rounded px-3 py-2 text-white"
+                                        style="background: rgb(45,131,209); background: linear-gradient(90deg, rgba(45,131,209,1) 0%, rgba(83,148,204,1) 65%, rgba(0,212,255,1) 100%)">
+                                        Liste des catégories
+                                    </h4>
+                                    <button type="button" class="btn btn-dark" data-bs-toggle="modal"
+                                        data-bs-target="#addCategoryModal">
+                                        Ajouter une catégorie
+                                    </button>
+                                </div>
+                                <div class="table-responsive mt-3">
+                                    <table class="table table-striped table-hover">
+                                        <thead class="table-dark">
+                                            <tr>
+                                                <th scope="col" class="text-center text-white">ID</th>
+                                                <th scope="col" class="text-center text-white">Nom</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <?php foreach ($categories as $category): ?>
+                                            <tr>
+                                                <td class="text-center"><?= htmlspecialchars($category['id']) ?></td>
+                                                <td class="text-center"><?= htmlspecialchars($category['name']) ?></td>
+                                            </tr>
+                                            <?php endforeach; ?>
+                                        </tbody>
+                                    </table>
+                                </div>
                             </div>
                         </div>
-
                     </div>
-<div class="d-flex justify-content-center mt-3">
-                    <h4 class="col-lg-4 card-title text-center  p-2 px-lg-5 rounded px-3 py-2 text-white"
-                                    style="background: rgb(45,131,209);
-                           background: linear-gradient(90deg, rgba(45,131,209,1) 0%, rgba(83,148,204,1) 65%, rgba(0,212,255,1) 100%)">Liste des catégories</h4>
-</div>
-                    <div class="d-flex justify-content-center align-items-center ">
-                        <div class="table-responsive  col-lg-9 col-12">
-                            <table class="table table-striped table-hover">
-                                <thead class="table-dark">
-                                    <tr>
-                                        <th scope="col" class="text-center text-white">ID</th>
-                                        <th scope="col" class="text-center text-white">Nom</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <?php foreach ($categories as $category): ?>
-                                    <tr>
-                                        <td class="text-center"><?= htmlspecialchars($category['id']) ?></td>
-                                        <td class="text-center"><?= htmlspecialchars($category['name']) ?></td>
-                                    </tr>
-                                    <?php endforeach; ?>
-                                </tbody>
-                            </table>
+                </main>
+            </div>
 
+            <!-- Modal -->
+            <div class="modal fade" id="addCategoryModal" tabindex="-1" aria-labelledby="addCategoryModalLabel"
+                aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="addCategoryModalLabel">Ajouter une nouvelle catégorie</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <form method="POST" action="categories.php">
+                                <div class="mb-3">
+                                    <label for="category_name" class="form-label">Nom de la catégorie</label>
+                                    <input type="text" class="form-control" id="category_name" name="category_name"
+                                        required>
+                                </div>
+                                <div class="text-center">
+                                    <button type="submit" class="btn btn-dark">Ajouter</button>
+                                </div>
+                            </form>
                         </div>
                     </div>
+                </div>
             </div>
-            </main>
+
+
 
         </div>
     </div>

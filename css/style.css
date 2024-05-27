@@ -61,13 +61,13 @@
     background-color: #77777777;
   }
   ::-webkit-scrollbar{
-    width:5px; height:20px
+    width:5px; height:6px;
   }
   ::-webkit-scrollbar-track{
-    background-color: #D1E5FF;
+    background-color: #e8ebef; height:10px
   }
   ::-webkit-scrollbar-thumb{
-    background-color: #74cccc;
+    background-color: #3b9dda; height:10px
 
   }
   /* Custom CSS for the dashboard */
@@ -88,9 +88,7 @@ body {
     height: fit-content
 }
 
-.nav-itemdashboard {
-    margin-bottom: 5px;
-}
+
 
 .nav-linkdashboard {
     /* padding: 10px 15px; */
@@ -114,16 +112,12 @@ body {
 .nav-linkdashboard.active:hover {
     background-color: #0056b3;
 }
-.nav-link.active {
-    background-color: #007bff;
-    border-color: #007bff;
-    color: #fff; /* Active font color */
-}
+
 .nav-link.active {
     background: rgb(45,131,209);
     background: linear-gradient(90deg, rgba(45,131,209,1) 0%, rgba(83,148,204,1) 65%, rgba(0,212,255,1) 100%);
   color: #ffffff; /* White text color */
-
+padding: 10px !important;
 }
 @media only screen and (max-width: 767px) {
   /* Styles à appliquer pour les téléphones */

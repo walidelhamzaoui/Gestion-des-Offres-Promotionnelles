@@ -1,3 +1,4 @@
+
 <?php
 
 session_start();
@@ -9,7 +10,7 @@ if (!isset($_SESSION['user_id'])) {
 }
 
 $user_role = $_SESSION['user_role'];
-if (!isset($_SESSION['user_id']) || $_SESSION['user_role'] != 'client' &&  $_SESSION['user_role'] != 'admin'  &&  $_SESSION['user_role'] != 'gestionnaire') {
+if (!isset($_SESSION['user_id']) || ($_SESSION['user_role'] != 'client' && $_SESSION['user_role'] != 'admin' && $_SESSION['user_role'] != 'gestionnaire')) {
     header("Location: connexion.php");
     exit();
 }
@@ -20,6 +21,7 @@ $stmt->execute([$user_id]);
 $user = $stmt->fetch();
 
 $message = '';
+$message_type = '';
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $nom = $_POST['nom'];
@@ -46,6 +48,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         if ($stmt->execute($params)) {
             $message = "Profil mis à jour avec succès.";
             $message_type = "success";
+
+            // Mettre à jour les données de l'utilisateur après la mise à jour
+            $user['nom'] = $nom;
+            $user['email'] = $email;
         } else {
             $message = "Erreur lors de la mise à jour du profil.";
             $message_type = "danger";
@@ -53,6 +59,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 }
 ?>
+
 
 
 <!DOCTYPE html>
@@ -76,11 +83,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         </script>
         <style>
         body {
-            background-color: #f8f9fa;
+            /* background-color: #f8f9fa; */
         }
 
         .profile-container {
-            max-width: 600px;
+            max-width:1000px;
             margin: 50px auto;
             padding: 20px;
             background: #ffffff;
@@ -93,11 +100,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             
         }
 
-        .profile-container {
-            max-width: 600px;
-            margin: auto;
-            padding-top: 20px;
-        }
+      
 
         
 
@@ -178,47 +181,37 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <!-- Dashboard -->
             <div class="d-flex flex-column flex-lg-row h-lg-full bg-surface-secondary ">
                 <!-- Vertical Navbar -->
-                <nav class="navbar  d-none d-lg-block eshow navbar-vertical h-lg-screen navbar-expand-lg px-0 py-0 position-relative   border-bottom border-bottom-lg-0 border-end-lg"
+                <nav class="navbar  d-none d-lg-block eshow navbar-vertical h-lg-screen navbar-expand-lg px-0 py-0 position-relative   "
                     id="navbarVertical">
 
                     <ul class="navbar-navdashboard navbar-nav px-2 text-center">
-                        <div class="pt-2">
-                            <h6 class="fs-6 "> Gestion des Offres Promotionnelles </h6>
-                        </div>
-                        <hr>
-                        <li class="nav-item nav-itemdashboard pt-2"> <?php if ($user_role == 'admin'): ?>
-                            <a href="tableau_de_bord.php" class=" nav-link nav-linkdashboard " class="btn btn-primary"><i
-                                    class="bi bi-people-fill " style="font-size:20px"></i> Gestion
-                                des utilisateurs</a>
-                            <?php endif; ?>
-                        </li>
-
-
-                        <li class="nav-item nav-itemdashboard "><a class="nav-link nav-linkdashboard fs-6 "
-                                href="categories.php"><i class="bi bi-grid" style="font-size:20px"></i>
-                                Categories</a></li>
-
-                        <li>
-
-                        <li class="nav-item nav-itemdashboard "><a class="nav-link   nav-linkdashboard fs-6 "
-                                href="ajoute_offre.php">
-                                <i class="bi bi-gift-fill" style="font-size:20px"></i>
-                                Offres</a></li>
-                        <li class="nav-item nav-itemdashboard "><a
-                                class="nav-link nav-linkdashboard fs-6 active  rounded-2 text-white "
-                                href="profil.php"><i class="bi bi-person-circle" style="font-size:20px"></i> Mon
-                                Profil</a></li>
-
-                        <li>
-                            <a class="nav-link nav-linkdashboard fs-6" id="logout-link" href="deconnexion.php"><i
-                                    class="bi bi-power" style="font-size:20px"></i>Déconnexion</a></a>
-                        </li>
-
-
-                    </ul>
+                    <div class="pt-2">
+                        <h6 class="fs-6">Gestion des Offres Promotionnelles</h6>
+                    </div>
+                    <hr>
+                    <li class="nav-item nav-itemdashboard pt-2">
+                        <?php if ($user_role == 'admin'): ?>
+                        <a href="tableau_de_bord.php" class="nav-link nav-linkdashboard "><i class="bi bi-people-fill"
+                                style="font-size:20px"></i> Gestion des utilisateurs</a>
+                        <?php endif; ?>
+                    </li>
+                    <li class="nav-item nav-itemdashboard"><a class="nav-link nav-linkdashboard fs-6"
+                            href="categories.php"><i class="bi bi-grid" style="font-size:20px"></i> Categories</a></li>
+                    <li class="nav-item nav-itemdashboard"><a
+                            class="nav-link nav-linkdashboard fs-6"
+                            href="ajoute_offre.php"><i class="bi bi-gift-fill" style="font-size:20px"></i> Offres</a>
+                    </li>
+                    <li class="nav-item nav-itemdashboard"><a class="nav-link nav-linkdashboard text-white active rounded-2  fs-6"
+                            href="profil.php"><i class="bi bi-person-circle" style="font-size:20px"></i> Mon
+                            Profil</a></li>
+                    <li>
+                        <a class="nav-link nav-linkdashboard fs-6" id="logout-link" href="deconnexion.php"><i
+                                class="bi bi-power" style="font-size:20px"></i> Déconnexion</a>
+                    </li>
+                </ul>
                 </nav>
                 <!-- Main content -->
-                <div class="h-screen flex-grow-1  main overflow-y-lg-auto">
+                <div class="h-screen flex-grow-1 bg-white  main overflow-y-lg-auto">
                     <main class="py-6">
                         <div class="container profile-container">
                             <div class="profile-header p-4  d-flex justify-content-center align-items-center">
@@ -252,13 +245,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                         name="confirm_password">
                                 </div>
                                 <div class="text-center my-5  col-12 ">
-                                    <button type="submit" class="btn btn-dark btn-block col-lg-6 col-12">Mettre à jour</button>
+                                    <button type="submit" class="btn btn-dark btn-block col-lg-3 col-12">Mettre à jour</button>
                                 </div>
                             </form>
                         </div>
                     </main>
                 </div>
-            </div>
+           
         </div>
     </body>
 

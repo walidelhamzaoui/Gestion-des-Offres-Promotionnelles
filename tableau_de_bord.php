@@ -128,24 +128,24 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     <a href="../index.php" class="navbar-brand pt-5  "><img src="../img/image2fsac4.jpg" alt="FSAC Logo"
                             class="logo"></a>
                 </div>
-                <li class="nav-item nav-itemdashboard"> <?php if ($user_role == 'admin'): ?>
-                    <a href="tableau_de_bord.php" class="nav-link nav-linkdashboard active py-2  rounded-2 text-white"
+                <li class="nav-item nav-itemdashboard "> <?php if ($user_role == 'admin'): ?>
+                    <a href="tableau_de_bord.php" class="nav-link nav-linkdashboard active py-2  my-3 pt-5 rounded-2 text-white"
                         class="btn btn-primary"><i class="bi bi-people-fill ps-3 me-3" style="font-size:20px"></i>
                         Gestion des utilisateurs</a>
                     <?php endif; ?>
                 </li>
 
-                <li class="nav-item nav-itemdashboard "><a class="nav-link nav-linkdashboard fs-6 "
+                <li class="nav-item nav-itemdashboard "><a class="nav-link nav-linkdashboard fs-6  my-3"
                         href="categories.php"><i class="bi bi-grid ps-3 me-3" style="font-size:20px"></i>
                         Categories</a></li>
 
                 <li>
 
-                <li class="nav-item nav-itemdashboard "><a class="nav-link  nav-linkdashboard fs-6 "
+                <li class="nav-item nav-itemdashboard "><a class="nav-link  nav-linkdashboard fs-6  my-3 "
                         href="ajoute_offre.php">
                         <i class="bi bi-gift-fill ps-3 me-3" style="font-size:20px"></i>
                         Offres</a></li>
-                <li class="nav-item nav-itemdashboard"><a class="nav-link nav-linkdashboard" href="profil.php"><i
+                <li class="nav-item nav-itemdashboard"><a class="nav-link nav-linkdashboard fs-6  my-3 " href="profil.php"><i
                             class="bi bi-person-circle ps-3 me-3" style="font-size:20px"></i> Mon
                         profil</a></li>
 
@@ -159,6 +159,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         <!-- Dashboard -->
         <div class="d-flex flex-column flex-lg-row h-lg-full bg-surface-secondary ">
+               
             <!-- Vertical Navbar -->
             <nav class="navbar  d-none d-lg-block eshow navbar-vertical h-lg-screen navbar-expand-lg px-0 py-0 position-relative   border-bottom border-bottom-lg-0 border-end-lg"
                 id="navbarVertical">
@@ -182,11 +183,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
                     <li>
 
-                    <li class="nav-item nav-itemdashboard "><a class="nav-link   nav-linkdashboard fs-6 "
+                    <li class="nav-item nav-itemdashboard "><a class="nav-link   nav-linkdashboard  "
                             href="ajoute_offre.php">
                             <i class="bi bi-gift-fill" style="font-size:20px"></i>
                             Offres</a></li>
-                    <li class="nav-item nav-itemdashboard "><a class="nav-link nav-linkdashboard fs-6 "
+                    <li class="nav-item nav-itemdashboard "><a class="nav-link nav-linkdashboard "
                             href="profil.php"><i class="bi bi-person-circle" style="font-size:20px"></i> Mon
                             Profil</a></li>
 
@@ -200,30 +201,31 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             </nav>
             <!-- Main content -->
             <div class="h-screen flex-grow-1  main overflow-y-lg-auto">
-                <main class="py-6">
+                <main class="">
                     <div class="container-fluid">
                         <div class="row">
-                            <div class="p-5 pb-0 pt-0 d-flex justify-content-center align-items-center ">
-                                <h4 class="col-12 p-2 px-lg-5 rounded px-3 py-2 text-white"
+                           
+                            <div class="table-responsive">
+                            <div class="p-5 m-4 pb-0 pt-0 d-flex justify-content-center align-items-center ">
+                                <h4 class="col-12 p-3 px-lg-5 rounded px-3 py-2 text-white"
                                     style="background: rgb(45,131,209);
                            background: linear-gradient(90deg, rgba(45,131,209,1) 0%, rgba(83,148,204,1) 65%, rgba(0,212,255,1) 100%); width:fit-content">Liste des
                                     Utilisateurs</h4>
                             </div>
-                            <div class="table-responsive">
                                 <table class="table table-striped table-hover">
                                     <thead class="table-dark">
-                                        <tr class="">
+                                        <tr class='text-center'>
                                             <th scope="col" class="text-white">ID</th>
                                             <th scope="col" class="text-white">Nom</th>
                                             <th scope="col" class="text-white">Email</th>
                                             <th scope="col" class="text-white">Rôle</th>
-                                            <th scope="col" class="text-white">Statut</th>
+                                            <th scope="col" class="text-white text-center">Statut</th>
                                             <th scope="col" class="text-white text-center">Action</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         <?php foreach ($users as $user): ?>
-                                        <tr>
+                                        <tr class='text-center'>
                                             <td><?= htmlspecialchars($user['id']) ?></td>
                                             <td><?= htmlspecialchars($user['nom']) ?></td>
                                             <td><?= htmlspecialchars($user['email']) ?></td>

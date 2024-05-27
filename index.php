@@ -38,6 +38,7 @@ if ($stmt->rowCount() === 0) {
 }
 
 // Récupération des offres depuis la base de données
+
 $offres = $stmt->fetchAll();
 $user_id = $_SESSION['user_id'];
 $stmt = $pdo->prepare("SELECT * FROM utilisateurs WHERE id = ?");
@@ -72,6 +73,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         if ($stmt->execute($params)) {
             $message = "Profil mis à jour avec succès.";
             $message_type = "success";
+
+            // Réaffectez les nouvelles données à $user après la mise à jour
+            $user['nom'] = $nom;
+            $user['email'] = $email;
         } else {
             $message = "Erreur lors de la mise à jour du profil.";
             $message_type = "danger";
@@ -79,6 +84,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 }
 ?>
+
+
 
 
 <!DOCTYPE html>
@@ -104,7 +111,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }
 
         .card img {
-            height: 200px;
+            height:300px;
             object-fit: cover;
         }
 
@@ -114,7 +121,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             align-items: center;
             min-height: fit-content;
             flex-direction: column;
-            background-color: black;
+            background: rgb(12,48,187);
+background: linear-gradient(90deg, rgba(12,48,187,1) 0%, rgba(11,20,180,0.7792366946778712) 2%, rgba(19,81,203,1) 30%, rgba(19,203,201,1) 99%);
             border-radius: 10px;
             margin-bottom: 10px;
         }
@@ -186,39 +194,82 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }
 
         .navbar {
-            backdrop-filter: blur(80px);
-            box-shadow: 1px 1px 4px 8px rgba(0, 0, 0, 0.1);
-            background-color: black; /* Slightly transparent background to see the blur effect */
-        }
+    /* position: fixed; */
+    top: 0;
+    width: 100%;
+    z-index: 1000; /* Ensures the navbar stays above other content */
+    backdrop-filter: blur(5px);
+    box-shadow: 1px 1px 4px 8px rgba(0, 0, 0, 0.1);
+    background: rgb(12,27,187);
+background: linear-gradient(90deg, rgba(12,27,187,1) 0%, rgba(4,0,6,0.7792366946778712) 100%, rgba(0,1,10,1) 100%);
+    padding: 10px !important;
+    
+}
+.filter-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-top: 50px;
+    }
+
+    .filter-form {
+        background: rgb(12,48,187);
+background: linear-gradient(90deg, rgba(12,48,187,1) 0%, rgba(11,20,180,0.7792366946778712) 2%, rgba(19,81,203,1) 30%, rgba(19,203,201,1) 99%);
+        padding: 20px;
+        border-radius: 10px;
+    }
+
+    .filter-form label {
+        display: block;
+        margin-bottom: 10px;
+        
+    }
+
+    .filter-form select {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid #ced4da;
+        border-radius: 5px;
+        background-color: white;
+    }
+
+    .filter-form select:focus {
+        outline: none;
+        border-color: #495057;
+        box-shadow: 0 0 0 0.25rem rgba(0, 123, 255, 0.25);
+    }
+
     </style>
 </head>
 
 <body>
     <nav class="navbar navbar-expand-lg navbar-dark">
         <div class="container-fluid">
-            <a class="navbar-brand" href="#">Gestion des Offres Promotionnelles</a>
+            
+            <a class="navbar-brand" href="#"><div style="width:50px;height:50px;border-radius:50px;background-color:background: rgb(17,173,218);
+background: linear-gradient(90deg, rgba(17,173,218,1) 0%, rgba(30,104,180,1) 13%, rgba(0,237,255,1) 100%);"></div></a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav m-auto mb-2 mb-lg-0">
                     <li class="nav-item">
-                        <a class="nav-link py-1 mt-3 border-bottom rounded active" style="font-size:18px" aria-current="page" href="#">Les Offres</a>
+                        <a class="nav-link py-1 mt-3 border-bottom  rounded bg-info text-white p-3 px-5" style="font-size:18px;width:fit-content" aria-current="page" href="#">Les Offres</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="#" style="font-size:18px" data-bs-toggle="modal" data-bs-target="#profileModal">Profil</a>
                     </li>
                 </ul>
-                <form action="index.php" method="GET" class="d-lg-flex gap-4 position-relative" id="searchForm">
+                <form action="index.php" method="GET" class="d-flex gap-4 position-relative" id="searchForm">
                     <div class="search-input-group">
                         <input class="form-control" type="search" name="keywords" id="searchKeywords" placeholder="Recherche d'offres" aria-label="Recherche d'offres" value="<?php echo isset($_GET['keywords']) ? htmlspecialchars($_GET['keywords']) : ''; ?>">
                         <button class="search-button" type="submit">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="23" height="23" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="23" height="23" fill="currentColor" class="bi bi-search mb-2" viewBox="0 0 16 16">
                                 <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0"/>
                             </svg>
                         </button>
                     </div>
-                    <button class="btn btn-danger mt-2 px-5 py-2" type="button" id="clearSearch">
+                    <button class="btn btn-danger mt-1 px-5 py-2 mb-3" type="button" id="clearSearch">
                         <i class="bi bi-trash"></i>
                     </button>
                 </form>
@@ -226,36 +277,49 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         </div>
     </nav>
 
-    <div class="container mt-4">
+    <div class="container mt-5">
         
-        <div class="d-flex justify-content-center align-items-center col-12">
-            <div class="col-lg-4 my-2">
-                <label for="category-filter">Filtrer par catégorie:</label>
-                <select id="category-filter" class="form-select mb-4 bg-second" onchange="filterByCategory(this)">
-                    <option value="">Toutes les catégories</option>
-                    <?php
-                    // Requête SQL pour récupérer les catégories
-                    $categories = $pdo->query("SELECT * FROM categories");
-                    while ($category = $categories->fetch()) {
-                        echo "<option value='" . $category['id'] . "'>" . $category['name'] . "</option>";
-                    }
-                    ?>
-                </select>
-            </div>
-        </div>
+    <div class="container mt-5">
+    <div class="filter-container">
+    <div class="filter-form col-lg-4">
+        <label for="category-filter " class="text-white">Filtrer par catégorie :</label>
+        <select id="category-filter" class="form-select mb-4" onchange="filterByCategory(this)">
+    <option value="">Toutes les catégories</option>
+    <?php
+    // Requête SQL pour récupérer les catégories
+    $categories = $pdo->query("SELECT * FROM categories");
+    while ($category = $categories->fetch()) {
+        // Vérifier si la catégorie est sélectionnée
+        $selected = '';
+        if (isset($_GET['category']) && $_GET['category'] == $category['id']) {
+            $selected = 'selected';
+        }
+        echo "<option value='" . $category['id'] . "' $selected>" . $category['name'] . "</option>";
+    }
+    ?>
+</select>
+
+    </div>
+</div>
+
+        
         <!-- Affichage des offres avec filtres de catégorie -->
         <?php if (!empty($no_offers_message)) : ?>
-        <p class='no-offers-message'><?php echo $no_offers_message; ?></p>
+        <p class='no-offers-message bg-danger p-2  text-white text-center' ><?php echo $no_offers_message; ?></p>
         <?php else : ?>
         <div class="row">
             <?php foreach ($offres as $offre) : ?>
-            <div class="col-md-4">
-                <div class="card">
+            <div class="col-lg-4 col-md-6 mt-5 col-12">
+                <div class="card my-5">
                     <img src='uploads/<?php echo htmlspecialchars($offre['image']); ?>' alt='<?php echo htmlspecialchars($offre['titre']); ?>' class='card-img-top'>
-                    <div class="card-body">
-                        <h5 class="card-title"><?php echo htmlspecialchars($offre['titre']); ?></h5>
-                        <p class="card-text"><?php echo htmlspecialchars($offre['description']); ?></p>
-                        <p class="card-text"><small class="text-muted"><?php echo htmlspecialchars($offre['category_name']); ?></small></p>
+                    <div class="card-body ">
+                        <h5 class="card-title bg-dark text-white p-2 text-center"><?php echo htmlspecialchars($offre['titre']); ?></h5>
+                        <hr>
+                        <h5 class="card-text text-justify text-white p-2"><small class="text-muted"><?php echo htmlspecialchars($offre['category_name']); ?></small></h5>
+                        <hr>
+                        <p class="card-text" style="text-align:justify; height:150px; overflow-y:auto;">
+    <?php echo htmlspecialchars($offre['description']); ?>
+</p>
                         <a href='https://www.facebook.com/sharer/sharer.php?u=<?php echo urlencode("https://votre_site.com/detail_offre.php?offre_id=" . $offre['id']); ?>' target='_blank' class='btn p-2 rounded-2 facebook-share text-white btn-sm mt-2 share-btn'>
                             <i class="bi bi-facebook" style="font-size:20px"></i> <span class="share-text">Partager sur Facebook</span>
                         </a>
@@ -350,6 +414,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         var category_id = select.value;
         window.location.href = "index.php?category=" + category_id;
     }
+    </script>
+    <script>
+        
     </script>
 </body>
 </html>
