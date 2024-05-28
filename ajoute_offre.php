@@ -7,7 +7,7 @@ ini_set('display_errors', 1);
 session_start();
 
 // Vérification de l'authentification de l'utilisateur
-if (!isset($_SESSION['user_id']) || ($_SESSION['user_role'] != 'admin' && $_SESSION['user_role'] != 'gestionnaire')) {
+if (!isset($_SESSION['user_id']) || ($_SESSION['user_role'] != 'admin') && ($_SESSION['user_role'] !='gestionnaire')) {
     header("Location: connexion.php");
     exit();
 }
@@ -31,17 +31,7 @@ require 'db.php';
     <style>
         /* Votre CSS personnalisé ici */
         /* CSS pour la barre de navigation verticale fixe */
-.navbar-vertical {
-    position: fixed;
-    top: 0;
-    left: 0;
-    bottom: 0;
-    z-index: 1030; /* assure que la barre de navigation reste au-dessus du contenu */
-    overflow-y: auto; /* ajoute un défilement vertical si nécessaire */
-    width: 250px; /* ajustez la largeur selon vos besoins */
-    background-color: #fff; /* ajustez la couleur de fond selon votre thème */
-    border-right: 1px solid #dee2e6; /* ajoute une bordure droite */
-}
+
 
         
     </style>
@@ -73,18 +63,18 @@ require 'db.php';
                 <li><a class="nav-link nav-linkdashboard" id="logout-link" href="deconnexion.php"><i class="bi bi-power ps-3 me-3" style="font-size:20px"></i> Déconnexion</a></li>
             </ul>
         </div>
-        <div class="d-flex flex-column flex-lg-row h-lg-full bg-surface-secondary "  >
+        <div class="d-flex flex-column flex-lg-row h-lg-full bg-surface-secondary" >
             <nav class="navbar d-none d-lg-block eshow navbar-vertical h-lg-screen navbar-expand-lg px-0 py-0 position-relative border-bottom border-bottom-lg-0 border-end-lg" id="navbarVertical"  >
                 <ul class="navbar-navdashboard navbar-nav px-2 text-center" >
                     <div class="pt-2">
                         <h6 class="fs-6">Gestion des Offres Promotionnelles</h6>
                     </div>
                     <hr>
+                    <?php if ($user_role == 'admin'): ?>
                     <li class="nav-item nav-itemdashboard pt-2">
-                        <?php if ($user_role == 'admin'): ?>
-                            <a href="tableau_de_bord.php" class="nav-link nav-linkdashboard "><i class="bi bi-people-fill" style="font-size:20px"></i> Gestion des utilisateurs</a>
-                        <?php endif; ?>
+                        <a href="tableau_de_bord.php" class="nav-link nav-linkdashboard "><i class="bi bi-people-fill" style="font-size:20px"></i> Gestion des utilisateurs</a>
                     </li>
+                    <?php endif; ?>
                     <li class="nav-item nav-itemdashboard"><a class="nav-link nav-linkdashboard fs-6" href="categories.php"><i class="bi bi-grid" style="font-size:20px"></i> Categories</a></li>
                     <li class="nav-item nav-itemdashboard"><a class="nav-link text-white active rounded-2 nav-linkdashboard" style="width:250px" href="ajoute_offre.php"><i class="bi bi-gift-fill" style="font-size:20px"></i> Offres</a></li>
                     <li class="nav-item nav-itemdashboard"><a class="nav-link nav-linkdashboard fs-6" href="profil.php"><i class="bi bi-person-circle" style="font-size:20px"></i> Mon Profil</a></li>
