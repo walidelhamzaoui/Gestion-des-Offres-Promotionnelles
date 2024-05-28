@@ -99,6 +99,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 <button type="submit" class="btn btn-dark btn-block col-lg-6 col-12">Connexion</button>
             </div>
         </form>
+        <div class="d-flex justify-content-center align-items-center"><a href='Inscription.php' class="text-primary" style="text-decoration: underline !important">Inscription</a></div>
     </div>
 
     <!-- Bootstrap JS and dependencies -->

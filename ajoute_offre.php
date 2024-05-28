@@ -74,7 +74,7 @@ require 'db.php';
             </ul>
         </div>
         <div class="d-flex flex-column flex-lg-row h-lg-full bg-surface-secondary "  >
-            <nav class="navbar d-none d-lg-block eshow navbar-vertical h-lg-screen navbar-expand-lg px-0 py-0 position-relative border-bottom border-bottom-lg-0 border-end-lg" id="navbarVertical" style="height:fit-content !important" >
+            <nav class="navbar d-none d-lg-block eshow navbar-vertical h-lg-screen navbar-expand-lg px-0 py-0 position-relative border-bottom border-bottom-lg-0 border-end-lg" id="navbarVertical"  >
                 <ul class="navbar-navdashboard navbar-nav px-2 text-center" >
                     <div class="pt-2">
                         <h6 class="fs-6">Gestion des Offres Promotionnelles</h6>
@@ -100,7 +100,7 @@ require 'db.php';
                             <div class="card-body">
                                 <div class="p-2 d-flex justify-content-between align-items-center">
                                     <h4 class="col-lg-4 card-title text-center p-3 px-lg-5 rounded px-3 py-2 text-white" style="background: rgb(45,131,209); background: linear-gradient(90deg, rgba(45,131,209,1) 0%, rgba(83,148,204,1) 65%, rgba(0,212,255,1) 100%)">Liste des Offres</h4>
-                                    <button class="btn btn-dark text-end p-2" data-bs-toggle="modal" data-bs-target="#addOfferModal">Ajouter une offre</button>
+                                    <button class="btn btn-dark text-end py-3 px-4" data-bs-toggle="modal" data-bs-target="#addOfferModal">Ajouter une offre</button>
                                 </div>
                                 <div class="table-responsive mt-4">
                                     <table class="table table-striped table-hover">

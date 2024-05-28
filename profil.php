@@ -24,40 +24,58 @@ $message = '';
 $message_type = '';
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $nom = $_POST['nom'];
-    $email = $_POST['email'];
-    $password = $_POST['password'];
-    $confirm_password = $_POST['confirm_password'];
+    // Vérifier si les clés nécessaires existent dans le tableau $_POST
+    if(isset($_POST['nom'], $_POST['email'], $_POST['password'], $_POST['confirm_password'])) {
+        $nom = $_POST['nom'];
+        $email = $_POST['email'];
+        $password = $_POST['password'];
+        $confirm_password = $_POST['confirm_password'];
 
-    // Check if passwords match
-    if (!empty($password) && $password !== $confirm_password) {
-        $message = "Les mots de passe ne correspondent pas.";
-        $message_type = "danger";
-    } else {
-        // Update the user profile
-        if (!empty($password)) {
-            // Hash the new password
-            $hashed_password = password_hash($password, PASSWORD_DEFAULT);
-            $stmt = $pdo->prepare("UPDATE utilisateurs SET nom = ?, email = ?, mot_de_passe = ? WHERE id = ?");
-            $params = [$nom, $email, $hashed_password, $user_id];
-        } else {
-            $stmt = $pdo->prepare("UPDATE utilisateurs SET nom = ?, email = ? WHERE id = ?");
-            $params = [$nom, $email, $user_id];
-        }
-
-        if ($stmt->execute($params)) {
-            $message = "Profil mis à jour avec succès.";
-            $message_type = "success";
-
-            // Mettre à jour les données de l'utilisateur après la mise à jour
-            $user['nom'] = $nom;
-            $user['email'] = $email;
-        } else {
-            $message = "Erreur lors de la mise à jour du profil.";
+        // Vérifier si les mots de passe correspondent
+        if (!empty($password) && $password !== $confirm_password) {
+            $message = "Les mots de passe ne correspondent pas.";
             $message_type = "danger";
+        } else {
+            // Vérifier si l'email est déjà utilisé par un autre utilisateur
+            $stmt = $pdo->prepare("SELECT COUNT(*) FROM utilisateurs WHERE email = ? AND id != ?");
+            $stmt->execute([$email, $user_id]);
+            $count = $stmt->fetchColumn();
+
+            if ($count > 0) {
+                // Afficher un message d'erreur si l'email est déjà utilisé
+                $message = "L'adresse e-mail est déjà utilisée par un autre utilisateur.";
+                $message_type = "danger";
+            } else {
+                // Mettre à jour le profil de l'utilisateur
+                if (!empty($password)) {
+                    // Hasher le nouveau mot de passe
+                    $hashed_password = password_hash($password, PASSWORD_DEFAULT);
+                    $stmt = $pdo->prepare("UPDATE utilisateurs SET nom = ?, email = ?, mot_de_passe = ? WHERE id = ?");
+                    $params = [$nom, $email, $hashed_password, $user_id];
+                } else {
+                    $stmt = $pdo->prepare("UPDATE utilisateurs SET nom = ?, email = ? WHERE id = ?");
+                    $params = [$nom, $email, $user_id];
+                }
+
+                if ($stmt->execute($params)) {
+                    $message = "Profil mis à jour avec succès.";
+                    $message_type = "success";
+
+                    // Réaffecter les nouvelles données à $user après la mise à jour
+                    $user['nom'] = $nom;
+                    $user['email'] = $email;
+                } else {
+                    $message = "Erreur lors de la mise à jour du profil.";
+                    $message_type = "danger";
+                }
+            }
         }
+    } else {
+        // Gérer le cas où les clés nécessaires ne sont pas définies
+        // Par exemple, afficher un message d'erreur ou rediriger l'utilisateur
     }
 }
+
 ?>
 
 

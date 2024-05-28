@@ -59,40 +59,80 @@ $message = '';
 $message_type = '';
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $nom = $_POST['nom'];
-    $email = $_POST['email'];
-    $password = $_POST['password'];
-    $confirm_password = $_POST['confirm_password'];
+    // Vérifier si les clés nécessaires existent dans le tableau $_POST
+    if(isset($_POST['nom'], $_POST['email'], $_POST['password'], $_POST['confirm_password'])) {
+        $nom = $_POST['nom'];
+        $email = $_POST['email'];
+        $password = $_POST['password'];
+        $confirm_password = $_POST['confirm_password'];
 
-    // Check if passwords match
-    if (!empty($password) && $password !== $confirm_password) {
-        $message = "Les mots de passe ne correspondent pas.";
-        $message_type = "danger";
-    } else {
-        // Update the user profile
-        if (!empty($password)) {
-            // Hash the new password
-            $hashed_password = password_hash($password, PASSWORD_DEFAULT);
-            $stmt = $pdo->prepare("UPDATE utilisateurs SET nom = ?, email = ?, mot_de_passe = ? WHERE id = ?");
-            $params = [$nom, $email, $hashed_password, $user_id];
-        } else {
-            $stmt = $pdo->prepare("UPDATE utilisateurs SET nom = ?, email = ? WHERE id = ?");
-            $params = [$nom, $email, $user_id];
-        }
-
-        if ($stmt->execute($params)) {
-            $message = "Profil mis à jour avec succès.";
-            $message_type = "success";
-
-            // Réaffectez les nouvelles données à $user après la mise à jour
-            $user['nom'] = $nom;
-            $user['email'] = $email;
-        } else {
-            $message = "Erreur lors de la mise à jour du profil.";
+        // Vérifier si les mots de passe correspondent
+        if (!empty($password) && $password !== $confirm_password) {
+            $message = "Les mots de passe ne correspondent pas.";
             $message_type = "danger";
+        } else {
+            // Vérifier si l'email est déjà utilisé par un autre utilisateur
+            $stmt = $pdo->prepare("SELECT COUNT(*) FROM utilisateurs WHERE email = ? AND id != ?");
+            $stmt->execute([$email, $user_id]);
+            $count = $stmt->fetchColumn();
+
+            if ($count > 0) {
+                // Afficher un message d'erreur si l'email est déjà utilisé
+                $message = "L'adresse e-mail est déjà utilisée par un autre utilisateur.";
+                $message_type = "danger";
+            } else {
+                // Mettre à jour le profil de l'utilisateur
+                if (!empty($password)) {
+                    // Hasher le nouveau mot de passe
+                    $hashed_password = password_hash($password, PASSWORD_DEFAULT);
+                    $stmt = $pdo->prepare("UPDATE utilisateurs SET nom = ?, email = ?, mot_de_passe = ? WHERE id = ?");
+                    $params = [$nom, $email, $hashed_password, $user_id];
+                } else {
+                    $stmt = $pdo->prepare("UPDATE utilisateurs SET nom = ?, email = ? WHERE id = ?");
+                    $params = [$nom, $email, $user_id];
+                }
+
+                if ($stmt->execute($params)) {
+                    $message = "Profil mis à jour avec succès.";
+                    $message_type = "success";
+
+                    // Réaffecter les nouvelles données à $user après la mise à jour
+                    $user['nom'] = $nom;
+                    $user['email'] = $email;
+                } else {
+                    $message = "Erreur lors de la mise à jour du profil.";
+                    $message_type = "danger";
+                }
+            }
+        }
+    } else {
+        // Gérer le cas où les clés nécessaires ne sont pas définies
+        // Par exemple, afficher un message d'erreur ou rediriger l'utilisateur
+    }
+}
+
+
+if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['email'])) {
+    $email = $_POST['email'];
+
+    // Check if the email already exists in the database
+    $stmt = $pdo->prepare("SELECT COUNT(*) FROM newsletters WHERE email = ?");
+    $stmt->execute([$email]);
+    $count = $stmt->fetchColumn();
+
+    if ($count > 0) {
+        $message_inscription = "<p class='mt-3 p-4 mb-2 bg-danger rounded  text-white text-center'>Cet email est déjà inscrit à la newsletter.</p>";
+    } else {
+        // Insert the email only if it doesn't already exist
+        $stmt = $pdo->prepare("INSERT INTO newsletters (email) VALUES (?)");
+        if ($stmt->execute([$email])) {
+            $message_inscription = "<p class='mt-3 p-4 mb-2 rounded bg-success text-white  text-center'>Merci de vous être inscrit à notre newsletter!</p>";
+        } else {
+            $message_inscription = "<p class='mt-3 p-4 text-danger text-center'>Une erreur s'est produite. Veuillez réessayer.</p>";
         }
     }
 }
+
 ?>
 
 
@@ -289,7 +329,10 @@ background: linear-gradient(90deg, rgba(12,48,187,1) 0%, rgba(11,20,180,0.779236
         border-color: #495057;
         box-shadow: 0 0 0 0.25rem rgba(0, 123, 255, 0.25);
     }
-
+    .Deconnexion:hover{
+        background: rgb(187,12,57);
+background: linear-gradient(90deg, rgba(187,12,57,1) 0%, rgba(203,19,38,1) 0%, rgba(203,19,41,1) 100%, rgba(180,11,26,0.7792366946778712) 100%);
+    }
     </style>
 </head>
 
@@ -303,15 +346,11 @@ background: linear-gradient(90deg, rgba(17,173,218,1) 0%, rgba(30,104,180,1) 13%
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <ul class="navbar-nav m-auto mb-2 mb-lg-0">
+                <ul class="navbar-nav gap-5 m-auto mb-2 mb-lg-0">
                     <li class="nav-item">
-                        <a class="nav-link py-1 mt-3 border-bottom  rounded bg-info text-white p-3 px-5" style="font-size:18px;width:fit-content" aria-current="page" href="#">Les Offres</a>
+                        <a class="nav-link py-1  border-bottom  rounded bg-info text-white p-3 px-5" style="font-size:18px;width:fit-content" aria-current="page" href="#">Les Offres</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#" style="font-size:18px" data-bs-toggle="modal" data-bs-target="#profileModal">Mon Profil</a>
-                    </li>
-                </ul>
-                <form action="index.php" method="GET" class="d-flex gap-4 position-relative" id="searchForm">
+                    <form action="index.php" method="GET" class="d-flex gap-4 position-relative" id="searchForm">
                     <div class="search-input-group">
                         <input class="form-control" type="search" name="keywords" id="searchKeywords" placeholder="Recherche d'offres" aria-label="Recherche d'offres" value="<?php echo isset($_GET['keywords']) ? htmlspecialchars($_GET['keywords']) : ''; ?>">
                         <button class="search-button" type="submit">
@@ -324,6 +363,15 @@ background: linear-gradient(90deg, rgba(17,173,218,1) 0%, rgba(30,104,180,1) 13%
                         <i class="bi bi-trash"></i>
                     </button>
                 </form>
+                    
+                </ul>
+              
+                <li class="nav-item mb-2">
+                        <a class="nav-link text-white" href="#" style="font-size:18px" data-bs-toggle="modal" data-bs-target="#profileModal">Mon Profil</a>
+                    </li>
+                    <li class="nav-item mb-1">
+                        <a class="nav-link text-white rounded  bg-dark mb-1  Deconnexion" href="deconnexion.php" style="font-size:18px" > <i class="bi bi-box-arrow-left"></i> Deconnexion</a>
+                    </li>
             </div>
         </div>
     </nav>
@@ -386,8 +434,14 @@ background: linear-gradient(90deg, rgba(17,173,218,1) 0%, rgba(30,104,180,1) 13%
     </div>
 
     <div class="container newsletter-container p-3 mt-4">
+                <?php
+        // Afficher le message après l'inscription à la newsletter
+        if (isset($message_inscription)) {
+            echo $message_inscription;
+        }
+        ?>
         <h3 class="text-white">Inscription à la Newsletter</h3>
-        <form action="index.php" method="POST" id="newsletterForm" class="newsletter-form">
+        <form action="" method="post" id="newsletterForm" class="newsletter-form">
             <div class="mb-3">
                 <label for="email" class="form-label text-white">Adresse e-mail</label>
                 <input type="email" class="form-control" name="email" id="email" required>
@@ -395,18 +449,10 @@ background: linear-gradient(90deg, rgba(17,173,218,1) 0%, rgba(30,104,180,1) 13%
             <div class="text-end">
                 <button type="submit" class="btn btn-warning">S'inscrire</button>
             </div>
+    
         </form>
-        <?php
-        if (isset($_POST['email']) && !empty($_POST['email'])) {
-            $email = $_POST['email'];
-            $stmt = $pdo->prepare("INSERT INTO newsletters (email) VALUES (?)");
-            if ($stmt->execute([$email])) {
-                echo "<p class='mt-3 text-success text-center'>Merci de vous être inscrit à notre newsletter!</p>";
-            } else {
-                echo "<p class='mt-3 text-danger text-center'>Une erreur s'est produite. Veuillez réessayer.</p>";
-            }
-        }
-        ?>
+        
+     
     </div>
 
     <!-- Modal Profil -->
@@ -423,7 +469,7 @@ background: linear-gradient(90deg, rgba(17,173,218,1) 0%, rgba(30,104,180,1) 13%
                         <?= htmlspecialchars($message) ?>
                     </div>
                     <?php endif; ?>
-                    <form method="POST" id="profileForm">
+                    <form method="POST" id="profileForm" action="index.php">
                         <div class="form-group">
                             <label for="nom">Nom:</label>
                             <input type="text" class="form-control" id="nom" name="nom" value="<?= htmlspecialchars($user['nom']) ?>" required>

@@ -90,6 +90,8 @@ background-color:#0891b2; font-size:23px
             <div class="mt-4 mb-3 d-flex justify-content-center col-12">
                 <button type="submit" class="btn btn-dark btn-block col-lg-6 col-12">S'inscrire</button></div>
         </form>
+        <div class="d-flex justify-content-center align-items-center"><a href='connexion.php' class="text-primary" style="text-decoration: underline !important">Connexion</a></div>
+
     </div>
 
     <!-- Bootstrap JS and dependencies -->
